@@ -1,6 +1,7 @@
 from flask import render_template, request
 from app import app, mongo
 import boto3
+import os
 
 @app.route('/')
 @app.route('/home', methods=["GET"])
@@ -21,6 +22,8 @@ def upload():
         for item in returned_txt['KeyPhrases']:
             del item['BeginOffset']
             del item['EndOffset']
+        file.close()
+        os.remove("test.txt")
         # mongo.collection.insert(returned_txt)
         print(returned_txt)
     return render_template('C1L1.html', title='Home')
